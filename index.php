@@ -2,6 +2,7 @@
 // Enable error reporting
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
 
 // Start session if not already started
 if (session_status() === PHP_SESSION_NONE) {
@@ -11,8 +12,17 @@ if (session_status() === PHP_SESSION_NONE) {
 $pageTitle = 'Anne\'s Canteen | Fresh & Fast';
 $currentPage = 'home';
 
-// Include header
-require_once __DIR__ . '/includes/header.php';
+// Debug information
+echo '<!-- Current directory: ' . __DIR__ . ' -->';
+echo '<!-- Including: ' . __DIR__ . '/includes/header.php' . ' -->';
+
+// Include header with error handling
+$headerPath = __DIR__ . '/includes/header.php';
+if (file_exists($headerPath)) {
+    require_once $headerPath;
+} else {
+    die('Error: header.php not found at ' . $headerPath . '. Current directory: ' . getcwd());
+}
 ?>
 <section class="hero">
     <div class="hero-content">
